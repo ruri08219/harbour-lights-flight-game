@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbour Lights — Night Seaplane Mail Run</title>
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div id="hud">
+  <div class="hud-top">
+    <div class="hud-box">
+      <div class="hud-label">MISSION</div>
+      <div id="hud-mission">SORTIE 1 — RING RUN</div>
+      <div id="hud-objective">Rings 0/5 — thread the lit rings</div>
+    </div>
+    <div class="hud-box hud-center">
+      <div class="hud-label">HEADING</div>
+      <div id="hud-heading">180° S</div>
+    </div>
+    <div class="hud-box hud-right">
+      <div class="hud-label">SCORE <span id="hud-score">0</span> · TIME <span id="hud-time">0:00</span></div>
+      <div class="hud-hint">C camera · Space flaps · R restart · P pause</div>
+    </div>
+  </div>
+  <div id="banner"><div id="banner-title"></div><div id="banner-sub"></div></div>
+  <div id="hud-warn"></div>
+  <div class="hud-bottom">
+    <div class="hud-box hud-instruments">
+      <canvas id="horizon" width="140" height="140"></canvas>
+      <div class="hud-readouts">
+        <div><span class="hud-label">ALT</span><b id="hud-alt">0 ft</b></div>
+        <div><span class="hud-label">SPEED</span><b id="hud-speed">0 kt</b></div>
+      </div>
+    </div>
+    <div class="hud-box hud-bars">
+      <div class="bar-row"><span class="hud-label">THR</span><div class="bar"><i id="hud-throttle"></i></div><b id="hud-throttle-label">0%</b></div>
+      <div class="bar-row"><span class="hud-label">FUEL</span><div class="bar"><i id="hud-fuel"></i></div><b id="hud-fuel-label">100%</b></div>
+      <div class="bar-row"><span class="hud-label">DMG</span><div class="bar bar-dmg"><i id="hud-damage"></i></div><b>hull</b></div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-title" class="screen show">
+  <h1>HARBOUR LIGHTS</h1>
+  <p class="tag">A night seaplane mail run — three sorties over a lit archipelago.</p>
+  <p class="brief">Thread five glowing rings. Drop the mail low over three islands.
+  Bring her home onto the harbour water, gentle and slow. Fuel burns,
+  the wing stalls, and the islands are solid rock.</p>
+  <div class="buttons">
+    <button data-action="start">FLY THE FIRST SORTIE</button>
+    <button data-action="how">HOW TO FLY</button>
+  </div>
+  <p class="keys">Arrows steer · W/S throttle · Space flaps · C camera · R restart · P pause · M mute</p>
+</div>
+
+<div id="screen-how" class="screen">
+  <h2>HOW TO FLY</h2>
+  <div class="how-rows">
+    <div><b>↑ / ↓</b><span>pitch — climb and descend</span></div>
+    <div><b>← / →</b><span>bank — the wing turns where it leans</span></div>
+    <div><b>W / S</b><span>throttle — speed is lift; below 30&nbsp;m/s she stalls</span></div>
+    <div><b>Space</b><span>flaps — slower stall, kinder landings</span></div>
+    <div><b>C</b><span>chase camera / cockpit camera</span></div>
+    <div><b>Rings</b><span>fly through the gold rings, in order</span></div>
+    <div><b>Mail</b><span>fly under 70&nbsp;m through a blue beam to drop the bag</span></div>
+    <div><b>Home</b><span>land on the water inside the green circle, descent under 3&nbsp;m/s</span></div>
+  </div>
+  <div class="buttons"><button data-action="how">CLOSE</button></div>
+</div>
+
+<div id="screen-pause" class="screen">
+  <h2>PAUSED</h2>
+  <p class="brief">The harbour waits. The fuel does not burn while you think.</p>
+  <div class="buttons"><button data-action="resume">RESUME</button><button data-action="restart">RESTART</button></div>
+</div>
+
+<div id="screen-over" class="screen">
+  <h2 id="debrief-title-crash">DITCHED</h2>
+  <p class="brief" id="crash-reason">The sea keeps what it catches.</p>
+  <div id="debrief-rows-crash" class="debrief"></div>
+  <div class="buttons"><button data-action="restart">FLY AGAIN</button></div>
+</div>
+
+<div id="screen-done" class="screen">
+  <h2 id="debrief-title">MAIL DELIVERED</h2>
+  <p class="brief">Three sorties, one seaplane, and the harbour lights still burning.</p>
+  <div id="debrief-rows" class="debrief"></div>
+  <div class="buttons"><button data-action="restart">FLY AGAIN</button></div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
